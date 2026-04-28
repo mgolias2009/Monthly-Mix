@@ -1,0 +1,527 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+
+<!-- PWA / Apple Home Screen -->
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="Monthly Mix">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="theme-color" content="#0a0a0a">
+<meta name="description" content="AI-curated Spotify playlists every 2 months">
+
+<!-- App icon (shown on home screen) -->
+<link rel="apple-touch-icon" href="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA1MTIgNTEyIj4KICA8cmVjdCB3aWR0aD0iNTEyIiBoZWlnaHQ9IjUxMiIgcng9IjExMiIgZmlsbD0iIzBhMGEwYSIvPgogIDxyZWN0IHdpZHRoPSI1MTIiIGhlaWdodD0iNTEyIiByeD0iMTEyIiBmaWxsPSJ1cmwoI2dyYWQpIi8+CiAgPGRlZnM+CiAgICA8cmFkaWFsR3JhZGllbnQgaWQ9ImdyYWQiIGN4PSIzNSUiIGN5PSIzMCUiIHI9IjcwJSI+CiAgICAgIDxzdG9wIG9mZnNldD0iMCUiIHN0b3AtY29sb3I9IiMxYTNhMWEiLz4KICAgICAgPHN0b3Agb2Zmc2V0PSIxMDAlIiBzdG9wLWNvbG9yPSIjMGEwYTBhIi8+CiAgICA8L3JhZGlhbEdyYWRpZW50PgogIDwvZGVmcz4KICA8IS0tIFdhdmVmb3JtIGJhcnMgLS0+CiAgPHJlY3QgeD0iMTE2IiB5PSIyMjAiIHdpZHRoPSIyOCIgaGVpZ2h0PSI3MiIgcng9IjE0IiBmaWxsPSIjMURCOTU0IiBvcGFjaXR5PSIwLjMiLz4KICA8cmVjdCB4PSIxNTYiIHk9IjE4MCIgd2lkdGg9IjI4IiBoZWlnaHQ9IjE1MiIgcng9IjE0IiBmaWxsPSIjMURCOTU0IiBvcGFjaXR5PSIwLjUiLz4KICA8cmVjdCB4PSIxOTYiIHk9IjE1MCIgd2lkdGg9IjI4IiBoZWlnaHQ9IjIxMiIgcng9IjE0IiBmaWxsPSIjMURCOTU0IiBvcGFjaXR5PSIwLjc1Ii8+CiAgPHJlY3QgeD0iMjM2IiB5PSIxMjAiIHdpZHRoPSIyOCIgaGVpZ2h0PSIyNzIiIHJ4PSIxNCIgZmlsbD0iIzFEQjk1NCIvPgogIDxyZWN0IHg9IjI3NiIgeT0iMTUwIiB3aWR0aD0iMjgiIGhlaWdodD0iMjEyIiByeD0iMTQiIGZpbGw9IiMxREI5NTQiIG9wYWNpdHk9IjAuNzUiLz4KICA8cmVjdCB4PSIzMTYiIHk9IjE5MCIgd2lkdGg9IjI4IiBoZWlnaHQ9IjEzMiIgcng9IjE0IiBmaWxsPSIjMURCOTU0IiBvcGFjaXR5PSIwLjUiLz4KICA8cmVjdCB4PSIzNTYiIHk9IjIzMCIgd2lkdGg9IjI4IiBoZWlnaHQ9IjUyIiByeD0iMTQiIGZpbGw9IiMxREI5NTQiIG9wYWNpdHk9IjAuMyIvPgogIDwhLS0gTSBsZXR0ZXJmb3JtIHN1YnRsZSBvdmVybGF5IC0tPgogIDx0ZXh0IHg9IjI1NiIgeT0iMzkwIiBmb250LWZhbWlseT0iR2VvcmdpYSxzZXJpZiIgZm9udC1zaXplPSI1MiIgZmlsbD0id2hpdGUiIG9wYWNpdHk9IjAuMDgiIHRleHQtYW5jaG9yPSJtaWRkbGUiIGZvbnQtc3R5bGU9Iml0YWxpYyI+bWl4PC90ZXh0Pgo8L3N2Zz4=">
+<link rel="apple-touch-icon" sizes="180x180" href="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA1MTIgNTEyIj4KICA8cmVjdCB3aWR0aD0iNTEyIiBoZWlnaHQ9IjUxMiIgcng9IjExMiIgZmlsbD0iIzBhMGEwYSIvPgogIDxyZWN0IHdpZHRoPSI1MTIiIGhlaWdodD0iNTEyIiByeD0iMTEyIiBmaWxsPSJ1cmwoI2dyYWQpIi8+CiAgPGRlZnM+CiAgICA8cmFkaWFsR3JhZGllbnQgaWQ9ImdyYWQiIGN4PSIzNSUiIGN5PSIzMCUiIHI9IjcwJSI+CiAgICAgIDxzdG9wIG9mZnNldD0iMCUiIHN0b3AtY29sb3I9IiMxYTNhMWEiLz4KICAgICAgPHN0b3Agb2Zmc2V0PSIxMDAlIiBzdG9wLWNvbG9yPSIjMGEwYTBhIi8+CiAgICA8L3JhZGlhbEdyYWRpZW50PgogIDwvZGVmcz4KICA8IS0tIFdhdmVmb3JtIGJhcnMgLS0+CiAgPHJlY3QgeD0iMTE2IiB5PSIyMjAiIHdpZHRoPSIyOCIgaGVpZ2h0PSI3MiIgcng9IjE0IiBmaWxsPSIjMURCOTU0IiBvcGFjaXR5PSIwLjMiLz4KICA8cmVjdCB4PSIxNTYiIHk9IjE4MCIgd2lkdGg9IjI4IiBoZWlnaHQ9IjE1MiIgcng9IjE0IiBmaWxsPSIjMURCOTU0IiBvcGFjaXR5PSIwLjUiLz4KICA8cmVjdCB4PSIxOTYiIHk9IjE1MCIgd2lkdGg9IjI4IiBoZWlnaHQ9IjIxMiIgcng9IjE0IiBmaWxsPSIjMURCOTU0IiBvcGFjaXR5PSIwLjc1Ii8+CiAgPHJlY3QgeD0iMjM2IiB5PSIxMjAiIHdpZHRoPSIyOCIgaGVpZ2h0PSIyNzIiIHJ4PSIxNCIgZmlsbD0iIzFEQjk1NCIvPgogIDxyZWN0IHg9IjI3NiIgeT0iMTUwIiB3aWR0aD0iMjgiIGhlaWdodD0iMjEyIiByeD0iMTQiIGZpbGw9IiMxREI5NTQiIG9wYWNpdHk9IjAuNzUiLz4KICA8cmVjdCB4PSIzMTYiIHk9IjE5MCIgd2lkdGg9IjI4IiBoZWlnaHQ9IjEzMiIgcng9IjE0IiBmaWxsPSIjMURCOTU0IiBvcGFjaXR5PSIwLjUiLz4KICA8cmVjdCB4PSIzNTYiIHk9IjIzMCIgd2lkdGg9IjI4IiBoZWlnaHQ9IjUyIiByeD0iMTQiIGZpbGw9IiMxREI5NTQiIG9wYWNpdHk9IjAuMyIvPgogIDwhLS0gTSBsZXR0ZXJmb3JtIHN1YnRsZSBvdmVybGF5IC0tPgogIDx0ZXh0IHg9IjI1NiIgeT0iMzkwIiBmb250LWZhbWlseT0iR2VvcmdpYSxzZXJpZiIgZm9udC1zaXplPSI1MiIgZmlsbD0id2hpdGUiIG9wYWNpdHk9IjAuMDgiIHRleHQtYW5jaG9yPSJtaWRkbGUiIGZvbnQtc3R5bGU9Iml0YWxpYyI+bWl4PC90ZXh0Pgo8L3N2Zz4=">
+<link rel="apple-touch-icon" sizes="167x167" href="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA1MTIgNTEyIj4KICA8cmVjdCB3aWR0aD0iNTEyIiBoZWlnaHQ9IjUxMiIgcng9IjExMiIgZmlsbD0iIzBhMGEwYSIvPgogIDxyZWN0IHdpZHRoPSI1MTIiIGhlaWdodD0iNTEyIiByeD0iMTEyIiBmaWxsPSJ1cmwoI2dyYWQpIi8+CiAgPGRlZnM+CiAgICA8cmFkaWFsR3JhZGllbnQgaWQ9ImdyYWQiIGN4PSIzNSUiIGN5PSIzMCUiIHI9IjcwJSI+CiAgICAgIDxzdG9wIG9mZnNldD0iMCUiIHN0b3AtY29sb3I9IiMxYTNhMWEiLz4KICAgICAgPHN0b3Agb2Zmc2V0PSIxMDAlIiBzdG9wLWNvbG9yPSIjMGEwYTBhIi8+CiAgICA8L3JhZGlhbEdyYWRpZW50PgogIDwvZGVmcz4KICA8IS0tIFdhdmVmb3JtIGJhcnMgLS0+CiAgPHJlY3QgeD0iMTE2IiB5PSIyMjAiIHdpZHRoPSIyOCIgaGVpZ2h0PSI3MiIgcng9IjE0IiBmaWxsPSIjMURCOTU0IiBvcGFjaXR5PSIwLjMiLz4KICA8cmVjdCB4PSIxNTYiIHk9IjE4MCIgd2lkdGg9IjI4IiBoZWlnaHQ9IjE1MiIgcng9IjE0IiBmaWxsPSIjMURCOTU0IiBvcGFjaXR5PSIwLjUiLz4KICA8cmVjdCB4PSIxOTYiIHk9IjE1MCIgd2lkdGg9IjI4IiBoZWlnaHQ9IjIxMiIgcng9IjE0IiBmaWxsPSIjMURCOTU0IiBvcGFjaXR5PSIwLjc1Ii8+CiAgPHJlY3QgeD0iMjM2IiB5PSIxMjAiIHdpZHRoPSIyOCIgaGVpZ2h0PSIyNzIiIHJ4PSIxNCIgZmlsbD0iIzFEQjk1NCIvPgogIDxyZWN0IHg9IjI3NiIgeT0iMTUwIiB3aWR0aD0iMjgiIGhlaWdodD0iMjEyIiByeD0iMTQiIGZpbGw9IiMxREI5NTQiIG9wYWNpdHk9IjAuNzUiLz4KICA8cmVjdCB4PSIzMTYiIHk9IjE5MCIgd2lkdGg9IjI4IiBoZWlnaHQ9IjEzMiIgcng9IjE0IiBmaWxsPSIjMURCOTU0IiBvcGFjaXR5PSIwLjUiLz4KICA8cmVjdCB4PSIzNTYiIHk9IjIzMCIgd2lkdGg9IjI4IiBoZWlnaHQ9IjUyIiByeD0iMTQiIGZpbGw9IiMxREI5NTQiIG9wYWNpdHk9IjAuMyIvPgogIDwhLS0gTSBsZXR0ZXJmb3JtIHN1YnRsZSBvdmVybGF5IC0tPgogIDx0ZXh0IHg9IjI1NiIgeT0iMzkwIiBmb250LWZhbWlseT0iR2VvcmdpYSxzZXJpZiIgZm9udC1zaXplPSI1MiIgZmlsbD0id2hpdGUiIG9wYWNpdHk9IjAuMDgiIHRleHQtYW5jaG9yPSJtaWRkbGUiIGZvbnQtc3R5bGU9Iml0YWxpYyI+bWl4PC90ZXh0Pgo8L3N2Zz4=">
+<link rel="apple-touch-icon" sizes="152x152" href="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA1MTIgNTEyIj4KICA8cmVjdCB3aWR0aD0iNTEyIiBoZWlnaHQ9IjUxMiIgcng9IjExMiIgZmlsbD0iIzBhMGEwYSIvPgogIDxyZWN0IHdpZHRoPSI1MTIiIGhlaWdodD0iNTEyIiByeD0iMTEyIiBmaWxsPSJ1cmwoI2dyYWQpIi8+CiAgPGRlZnM+CiAgICA8cmFkaWFsR3JhZGllbnQgaWQ9ImdyYWQiIGN4PSIzNSUiIGN5PSIzMCUiIHI9IjcwJSI+CiAgICAgIDxzdG9wIG9mZnNldD0iMCUiIHN0b3AtY29sb3I9IiMxYTNhMWEiLz4KICAgICAgPHN0b3Agb2Zmc2V0PSIxMDAlIiBzdG9wLWNvbG9yPSIjMGEwYTBhIi8+CiAgICA8L3JhZGlhbEdyYWRpZW50PgogIDwvZGVmcz4KICA8IS0tIFdhdmVmb3JtIGJhcnMgLS0+CiAgPHJlY3QgeD0iMTE2IiB5PSIyMjAiIHdpZHRoPSIyOCIgaGVpZ2h0PSI3MiIgcng9IjE0IiBmaWxsPSIjMURCOTU0IiBvcGFjaXR5PSIwLjMiLz4KICA8cmVjdCB4PSIxNTYiIHk9IjE4MCIgd2lkdGg9IjI4IiBoZWlnaHQ9IjE1MiIgcng9IjE0IiBmaWxsPSIjMURCOTU0IiBvcGFjaXR5PSIwLjUiLz4KICA8cmVjdCB4PSIxOTYiIHk9IjE1MCIgd2lkdGg9IjI4IiBoZWlnaHQ9IjIxMiIgcng9IjE0IiBmaWxsPSIjMURCOTU0IiBvcGFjaXR5PSIwLjc1Ii8+CiAgPHJlY3QgeD0iMjM2IiB5PSIxMjAiIHdpZHRoPSIyOCIgaGVpZ2h0PSIyNzIiIHJ4PSIxNCIgZmlsbD0iIzFEQjk1NCIvPgogIDxyZWN0IHg9IjI3NiIgeT0iMTUwIiB3aWR0aD0iMjgiIGhlaWdodD0iMjEyIiByeD0iMTQiIGZpbGw9IiMxREI5NTQiIG9wYWNpdHk9IjAuNzUiLz4KICA8cmVjdCB4PSIzMTYiIHk9IjE5MCIgd2lkdGg9IjI4IiBoZWlnaHQ9IjEzMiIgcng9IjE0IiBmaWxsPSIjMURCOTU0IiBvcGFjaXR5PSIwLjUiLz4KICA8cmVjdCB4PSIzNTYiIHk9IjIzMCIgd2lkdGg9IjI4IiBoZWlnaHQ9IjUyIiByeD0iMTQiIGZpbGw9IiMxREI5NTQiIG9wYWNpdHk9IjAuMyIvPgogIDwhLS0gTSBsZXR0ZXJmb3JtIHN1YnRsZSBvdmVybGF5IC0tPgogIDx0ZXh0IHg9IjI1NiIgeT0iMzkwIiBmb250LWZhbWlseT0iR2VvcmdpYSxzZXJpZiIgZm9udC1zaXplPSI1MiIgZmlsbD0id2hpdGUiIG9wYWNpdHk9IjAuMDgiIHRleHQtYW5jaG9yPSJtaWRkbGUiIGZvbnQtc3R5bGU9Iml0YWxpYyI+bWl4PC90ZXh0Pgo8L3N2Zz4=">
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA1MTIgNTEyIj4KICA8cmVjdCB3aWR0aD0iNTEyIiBoZWlnaHQ9IjUxMiIgcng9IjExMiIgZmlsbD0iIzBhMGEwYSIvPgogIDxyZWN0IHdpZHRoPSI1MTIiIGhlaWdodD0iNTEyIiByeD0iMTEyIiBmaWxsPSJ1cmwoI2dyYWQpIi8+CiAgPGRlZnM+CiAgICA8cmFkaWFsR3JhZGllbnQgaWQ9ImdyYWQiIGN4PSIzNSUiIGN5PSIzMCUiIHI9IjcwJSI+CiAgICAgIDxzdG9wIG9mZnNldD0iMCUiIHN0b3AtY29sb3I9IiMxYTNhMWEiLz4KICAgICAgPHN0b3Agb2Zmc2V0PSIxMDAlIiBzdG9wLWNvbG9yPSIjMGEwYTBhIi8+CiAgICA8L3JhZGlhbEdyYWRpZW50PgogIDwvZGVmcz4KICA8IS0tIFdhdmVmb3JtIGJhcnMgLS0+CiAgPHJlY3QgeD0iMTE2IiB5PSIyMjAiIHdpZHRoPSIyOCIgaGVpZ2h0PSI3MiIgcng9IjE0IiBmaWxsPSIjMURCOTU0IiBvcGFjaXR5PSIwLjMiLz4KICA8cmVjdCB4PSIxNTYiIHk9IjE4MCIgd2lkdGg9IjI4IiBoZWlnaHQ9IjE1MiIgcng9IjE0IiBmaWxsPSIjMURCOTU0IiBvcGFjaXR5PSIwLjUiLz4KICA8cmVjdCB4PSIxOTYiIHk9IjE1MCIgd2lkdGg9IjI4IiBoZWlnaHQ9IjIxMiIgcng9IjE0IiBmaWxsPSIjMURCOTU0IiBvcGFjaXR5PSIwLjc1Ii8+CiAgPHJlY3QgeD0iMjM2IiB5PSIxMjAiIHdpZHRoPSIyOCIgaGVpZ2h0PSIyNzIiIHJ4PSIxNCIgZmlsbD0iIzFEQjk1NCIvPgogIDxyZWN0IHg9IjI3NiIgeT0iMTUwIiB3aWR0aD0iMjgiIGhlaWdodD0iMjEyIiByeD0iMTQiIGZpbGw9IiMxREI5NTQiIG9wYWNpdHk9IjAuNzUiLz4KICA8cmVjdCB4PSIzMTYiIHk9IjE5MCIgd2lkdGg9IjI4IiBoZWlnaHQ9IjEzMiIgcng9IjE0IiBmaWxsPSIjMURCOTU0IiBvcGFjaXR5PSIwLjUiLz4KICA8cmVjdCB4PSIzNTYiIHk9IjIzMCIgd2lkdGg9IjI4IiBoZWlnaHQ9IjUyIiByeD0iMTQiIGZpbGw9IiMxREI5NTQiIG9wYWNpdHk9IjAuMyIvPgogIDwhLS0gTSBsZXR0ZXJmb3JtIHN1YnRsZSBvdmVybGF5IC0tPgogIDx0ZXh0IHg9IjI1NiIgeT0iMzkwIiBmb250LWZhbWlseT0iR2VvcmdpYSxzZXJpZiIgZm9udC1zaXplPSI1MiIgZmlsbD0id2hpdGUiIG9wYWNpdHk9IjAuMDgiIHRleHQtYW5jaG9yPSJtaWRkbGUiIGZvbnQtc3R5bGU9Iml0YWxpYyI+bWl4PC90ZXh0Pgo8L3N2Zz4=">
+
+<!-- Apple splash screens for every iPhone size -->
+<link rel="apple-touch-startup-image" media="screen and (device-width: 430px) and (device-height: 932px) and (-webkit-device-pixel-ratio: 3)" href="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAxMjkwIDI3OTYiPgogIDxyZWN0IHdpZHRoPSIxMjkwIiBoZWlnaHQ9IjI3OTYiIGZpbGw9IiMwYTBhMGEiLz4KICA8cmFkaWFsR3JhZGllbnQgaWQ9Imdsb3ciIGN4PSI1MCUiIGN5PSI0NSUiIHI9IjQwJSI+CiAgICA8c3RvcCBvZmZzZXQ9IjAlIiBzdG9wLWNvbG9yPSIjMWEzYTFhIi8+CiAgICA8c3RvcCBvZmZzZXQ9IjEwMCUiIHN0b3AtY29sb3I9IiMwYTBhMGEiLz4KICA8L3JhZGlhbEdyYWRpZW50PgogIDxyZWN0IHdpZHRoPSIxMjkwIiBoZWlnaHQ9IjI3OTYiIGZpbGw9InVybCgjZ2xvdykiLz4KICA8IS0tIEljb24gY2VudGVyZWQgLS0+CiAgPHJlY3QgeD0iNDk1IiB5PSIxMDk4IiB3aWR0aD0iMzAwIiBoZWlnaHQ9IjMwMCIgcng9IjY2IiBmaWxsPSIjMTExIi8+CiAgPHJhZGlhbEdyYWRpZW50IGlkPSJpZ3JhZCIgY3g9IjM1JSIgY3k9IjMwJSIgcj0iNzAlIj4KICAgIDxzdG9wIG9mZnNldD0iMCUiIHN0b3AtY29sb3I9IiMxYTNhMWEiLz4KICAgIDxzdG9wIG9mZnNldD0iMTAwJSIgc3RvcC1jb2xvcj0iIzBkMGQwZCIvPgogIDwvcmFkaWFsR3JhZGllbnQ+CiAgPHJlY3QgeD0iNDk1IiB5PSIxMDk4IiB3aWR0aD0iMzAwIiBoZWlnaHQ9IjMwMCIgcng9IjY2IiBmaWxsPSJ1cmwoI2lncmFkKSIvPgogIDwhLS0gV2F2ZWZvcm0gYmFycyBpbnNpZGUgaWNvbiAtLT4KICA8cmVjdCB4PSI1NDMiIHk9IjExOTYiIHdpZHRoPSIxNiIgaGVpZ2h0PSI0MiIgcng9IjgiIGZpbGw9IiMxREI5NTQiIG9wYWNpdHk9IjAuMyIvPgogIDxyZWN0IHg9IjU2NiIgeT0iMTE3NSIgd2lkdGg9IjE2IiBoZWlnaHQ9Ijg4IiByeD0iOCIgZmlsbD0iIzFEQjk1NCIgb3BhY2l0eT0iMC41Ii8+CiAgPHJlY3QgeD0iNTg5IiB5PSIxMTU4IiB3aWR0aD0iMTYiIGhlaWdodD0iMTI0IiByeD0iOCIgZmlsbD0iIzFEQjk1NCIgb3BhY2l0eT0iMC43NSIvPgogIDxyZWN0IHg9IjYxMiIgeT0iMTE0MiIgd2lkdGg9IjE2IiBoZWlnaHQ9IjE1OCIgcng9IjgiIGZpbGw9IiMxREI5NTQiLz4KICA8cmVjdCB4PSI2MzUiIHk9IjExNTgiIHdpZHRoPSIxNiIgaGVpZ2h0PSIxMjQiIHJ4PSI4IiBmaWxsPSIjMURCOTU0IiBvcGFjaXR5PSIwLjc1Ii8+CiAgPHJlY3QgeD0iNjU4IiB5PSIxMTgwIiB3aWR0aD0iMTYiIGhlaWdodD0iNzgiIHJ4PSI4IiBmaWxsPSIjMURCOTU0IiBvcGFjaXR5PSIwLjUiLz4KICA8cmVjdCB4PSI2ODEiIHk9IjEyMDIiIHdpZHRoPSIxNiIgaGVpZ2h0PSIzNCIgcng9IjgiIGZpbGw9IiMxREI5NTQiIG9wYWNpdHk9IjAuMyIvPgogIDwhLS0gQXBwIG5hbWUgLS0+CiAgPHRleHQgeD0iNjQ1IiB5PSIxNDcwIiBmb250LWZhbWlseT0iR2VvcmdpYSxzZXJpZiIgZm9udC1zaXplPSI3MiIgZmlsbD0id2hpdGUiIHRleHQtYW5jaG9yPSJtaWRkbGUiIGZvbnQtc3R5bGU9Iml0YWxpYyIgZm9udC13ZWlnaHQ9Im5vcm1hbCI+TW9udGhseSBNaXg8L3RleHQ+CiAgPHRleHQgeD0iNjQ1IiB5PSIxNTMwIiBmb250LWZhbWlseT0iLWFwcGxlLXN5c3RlbSxzYW5zLXNlcmlmIiBmb250LXNpemU9IjMyIiBmaWxsPSJyZ2JhKDI1NSwyNTUsMjU1LDAuNCkiIHRleHQtYW5jaG9yPSJtaWRkbGUiPkFJLWN1cmF0ZWQgbGlzdGVuaW5nPC90ZXh0Pgo8L3N2Zz4=">
+<link rel="apple-touch-startup-image" media="screen and (device-width: 393px) and (device-height: 852px) and (-webkit-device-pixel-ratio: 3)" href="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAxMjkwIDI3OTYiPgogIDxyZWN0IHdpZHRoPSIxMjkwIiBoZWlnaHQ9IjI3OTYiIGZpbGw9IiMwYTBhMGEiLz4KICA8cmFkaWFsR3JhZGllbnQgaWQ9Imdsb3ciIGN4PSI1MCUiIGN5PSI0NSUiIHI9IjQwJSI+CiAgICA8c3RvcCBvZmZzZXQ9IjAlIiBzdG9wLWNvbG9yPSIjMWEzYTFhIi8+CiAgICA8c3RvcCBvZmZzZXQ9IjEwMCUiIHN0b3AtY29sb3I9IiMwYTBhMGEiLz4KICA8L3JhZGlhbEdyYWRpZW50PgogIDxyZWN0IHdpZHRoPSIxMjkwIiBoZWlnaHQ9IjI3OTYiIGZpbGw9InVybCgjZ2xvdykiLz4KICA8IS0tIEljb24gY2VudGVyZWQgLS0+CiAgPHJlY3QgeD0iNDk1IiB5PSIxMDk4IiB3aWR0aD0iMzAwIiBoZWlnaHQ9IjMwMCIgcng9IjY2IiBmaWxsPSIjMTExIi8+CiAgPHJhZGlhbEdyYWRpZW50IGlkPSJpZ3JhZCIgY3g9IjM1JSIgY3k9IjMwJSIgcj0iNzAlIj4KICAgIDxzdG9wIG9mZnNldD0iMCUiIHN0b3AtY29sb3I9IiMxYTNhMWEiLz4KICAgIDxzdG9wIG9mZnNldD0iMTAwJSIgc3RvcC1jb2xvcj0iIzBkMGQwZCIvPgogIDwvcmFkaWFsR3JhZGllbnQ+CiAgPHJlY3QgeD0iNDk1IiB5PSIxMDk4IiB3aWR0aD0iMzAwIiBoZWlnaHQ9IjMwMCIgcng9IjY2IiBmaWxsPSJ1cmwoI2lncmFkKSIvPgogIDwhLS0gV2F2ZWZvcm0gYmFycyBpbnNpZGUgaWNvbiAtLT4KICA8cmVjdCB4PSI1NDMiIHk9IjExOTYiIHdpZHRoPSIxNiIgaGVpZ2h0PSI0MiIgcng9IjgiIGZpbGw9IiMxREI5NTQiIG9wYWNpdHk9IjAuMyIvPgogIDxyZWN0IHg9IjU2NiIgeT0iMTE3NSIgd2lkdGg9IjE2IiBoZWlnaHQ9Ijg4IiByeD0iOCIgZmlsbD0iIzFEQjk1NCIgb3BhY2l0eT0iMC41Ii8+CiAgPHJlY3QgeD0iNTg5IiB5PSIxMTU4IiB3aWR0aD0iMTYiIGhlaWdodD0iMTI0IiByeD0iOCIgZmlsbD0iIzFEQjk1NCIgb3BhY2l0eT0iMC43NSIvPgogIDxyZWN0IHg9IjYxMiIgeT0iMTE0MiIgd2lkdGg9IjE2IiBoZWlnaHQ9IjE1OCIgcng9IjgiIGZpbGw9IiMxREI5NTQiLz4KICA8cmVjdCB4PSI2MzUiIHk9IjExNTgiIHdpZHRoPSIxNiIgaGVpZ2h0PSIxMjQiIHJ4PSI4IiBmaWxsPSIjMURCOTU0IiBvcGFjaXR5PSIwLjc1Ii8+CiAgPHJlY3QgeD0iNjU4IiB5PSIxMTgwIiB3aWR0aD0iMTYiIGhlaWdodD0iNzgiIHJ4PSI4IiBmaWxsPSIjMURCOTU0IiBvcGFjaXR5PSIwLjUiLz4KICA8cmVjdCB4PSI2ODEiIHk9IjEyMDIiIHdpZHRoPSIxNiIgaGVpZ2h0PSIzNCIgcng9IjgiIGZpbGw9IiMxREI5NTQiIG9wYWNpdHk9IjAuMyIvPgogIDwhLS0gQXBwIG5hbWUgLS0+CiAgPHRleHQgeD0iNjQ1IiB5PSIxNDcwIiBmb250LWZhbWlseT0iR2VvcmdpYSxzZXJpZiIgZm9udC1zaXplPSI3MiIgZmlsbD0id2hpdGUiIHRleHQtYW5jaG9yPSJtaWRkbGUiIGZvbnQtc3R5bGU9Iml0YWxpYyIgZm9udC13ZWlnaHQ9Im5vcm1hbCI+TW9udGhseSBNaXg8L3RleHQ+CiAgPHRleHQgeD0iNjQ1IiB5PSIxNTMwIiBmb250LWZhbWlseT0iLWFwcGxlLXN5c3RlbSxzYW5zLXNlcmlmIiBmb250LXNpemU9IjMyIiBmaWxsPSJyZ2JhKDI1NSwyNTUsMjU1LDAuNCkiIHRleHQtYW5jaG9yPSJtaWRkbGUiPkFJLWN1cmF0ZWQgbGlzdGVuaW5nPC90ZXh0Pgo8L3N2Zz4=">
+<link rel="apple-touch-startup-image" media="screen and (device-width: 390px) and (device-height: 844px) and (-webkit-device-pixel-ratio: 3)" href="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAxMjkwIDI3OTYiPgogIDxyZWN0IHdpZHRoPSIxMjkwIiBoZWlnaHQ9IjI3OTYiIGZpbGw9IiMwYTBhMGEiLz4KICA8cmFkaWFsR3JhZGllbnQgaWQ9Imdsb3ciIGN4PSI1MCUiIGN5PSI0NSUiIHI9IjQwJSI+CiAgICA8c3RvcCBvZmZzZXQ9IjAlIiBzdG9wLWNvbG9yPSIjMWEzYTFhIi8+CiAgICA8c3RvcCBvZmZzZXQ9IjEwMCUiIHN0b3AtY29sb3I9IiMwYTBhMGEiLz4KICA8L3JhZGlhbEdyYWRpZW50PgogIDxyZWN0IHdpZHRoPSIxMjkwIiBoZWlnaHQ9IjI3OTYiIGZpbGw9InVybCgjZ2xvdykiLz4KICA8IS0tIEljb24gY2VudGVyZWQgLS0+CiAgPHJlY3QgeD0iNDk1IiB5PSIxMDk4IiB3aWR0aD0iMzAwIiBoZWlnaHQ9IjMwMCIgcng9IjY2IiBmaWxsPSIjMTExIi8+CiAgPHJhZGlhbEdyYWRpZW50IGlkPSJpZ3JhZCIgY3g9IjM1JSIgY3k9IjMwJSIgcj0iNzAlIj4KICAgIDxzdG9wIG9mZnNldD0iMCUiIHN0b3AtY29sb3I9IiMxYTNhMWEiLz4KICAgIDxzdG9wIG9mZnNldD0iMTAwJSIgc3RvcC1jb2xvcj0iIzBkMGQwZCIvPgogIDwvcmFkaWFsR3JhZGllbnQ+CiAgPHJlY3QgeD0iNDk1IiB5PSIxMDk4IiB3aWR0aD0iMzAwIiBoZWlnaHQ9IjMwMCIgcng9IjY2IiBmaWxsPSJ1cmwoI2lncmFkKSIvPgogIDwhLS0gV2F2ZWZvcm0gYmFycyBpbnNpZGUgaWNvbiAtLT4KICA8cmVjdCB4PSI1NDMiIHk9IjExOTYiIHdpZHRoPSIxNiIgaGVpZ2h0PSI0MiIgcng9IjgiIGZpbGw9IiMxREI5NTQiIG9wYWNpdHk9IjAuMyIvPgogIDxyZWN0IHg9IjU2NiIgeT0iMTE3NSIgd2lkdGg9IjE2IiBoZWlnaHQ9Ijg4IiByeD0iOCIgZmlsbD0iIzFEQjk1NCIgb3BhY2l0eT0iMC41Ii8+CiAgPHJlY3QgeD0iNTg5IiB5PSIxMTU4IiB3aWR0aD0iMTYiIGhlaWdodD0iMTI0IiByeD0iOCIgZmlsbD0iIzFEQjk1NCIgb3BhY2l0eT0iMC43NSIvPgogIDxyZWN0IHg9IjYxMiIgeT0iMTE0MiIgd2lkdGg9IjE2IiBoZWlnaHQ9IjE1OCIgcng9IjgiIGZpbGw9IiMxREI5NTQiLz4KICA8cmVjdCB4PSI2MzUiIHk9IjExNTgiIHdpZHRoPSIxNiIgaGVpZ2h0PSIxMjQiIHJ4PSI4IiBmaWxsPSIjMURCOTU0IiBvcGFjaXR5PSIwLjc1Ii8+CiAgPHJlY3QgeD0iNjU4IiB5PSIxMTgwIiB3aWR0aD0iMTYiIGhlaWdodD0iNzgiIHJ4PSI4IiBmaWxsPSIjMURCOTU0IiBvcGFjaXR5PSIwLjUiLz4KICA8cmVjdCB4PSI2ODEiIHk9IjEyMDIiIHdpZHRoPSIxNiIgaGVpZ2h0PSIzNCIgcng9IjgiIGZpbGw9IiMxREI5NTQiIG9wYWNpdHk9IjAuMyIvPgogIDwhLS0gQXBwIG5hbWUgLS0+CiAgPHRleHQgeD0iNjQ1IiB5PSIxNDcwIiBmb250LWZhbWlseT0iR2VvcmdpYSxzZXJpZiIgZm9udC1zaXplPSI3MiIgZmlsbD0id2hpdGUiIHRleHQtYW5jaG9yPSJtaWRkbGUiIGZvbnQtc3R5bGU9Iml0YWxpYyIgZm9udC13ZWlnaHQ9Im5vcm1hbCI+TW9udGhseSBNaXg8L3RleHQ+CiAgPHRleHQgeD0iNjQ1IiB5PSIxNTMwIiBmb250LWZhbWlseT0iLWFwcGxlLXN5c3RlbSxzYW5zLXNlcmlmIiBmb250LXNpemU9IjMyIiBmaWxsPSJyZ2JhKDI1NSwyNTUsMjU1LDAuNCkiIHRleHQtYW5jaG9yPSJtaWRkbGUiPkFJLWN1cmF0ZWQgbGlzdGVuaW5nPC90ZXh0Pgo8L3N2Zz4=">
+<link rel="apple-touch-startup-image" media="screen and (device-width: 375px) and (device-height: 812px) and (-webkit-device-pixel-ratio: 3)" href="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAxMjkwIDI3OTYiPgogIDxyZWN0IHdpZHRoPSIxMjkwIiBoZWlnaHQ9IjI3OTYiIGZpbGw9IiMwYTBhMGEiLz4KICA8cmFkaWFsR3JhZGllbnQgaWQ9Imdsb3ciIGN4PSI1MCUiIGN5PSI0NSUiIHI9IjQwJSI+CiAgICA8c3RvcCBvZmZzZXQ9IjAlIiBzdG9wLWNvbG9yPSIjMWEzYTFhIi8+CiAgICA8c3RvcCBvZmZzZXQ9IjEwMCUiIHN0b3AtY29sb3I9IiMwYTBhMGEiLz4KICA8L3JhZGlhbEdyYWRpZW50PgogIDxyZWN0IHdpZHRoPSIxMjkwIiBoZWlnaHQ9IjI3OTYiIGZpbGw9InVybCgjZ2xvdykiLz4KICA8IS0tIEljb24gY2VudGVyZWQgLS0+CiAgPHJlY3QgeD0iNDk1IiB5PSIxMDk4IiB3aWR0aD0iMzAwIiBoZWlnaHQ9IjMwMCIgcng9IjY2IiBmaWxsPSIjMTExIi8+CiAgPHJhZGlhbEdyYWRpZW50IGlkPSJpZ3JhZCIgY3g9IjM1JSIgY3k9IjMwJSIgcj0iNzAlIj4KICAgIDxzdG9wIG9mZnNldD0iMCUiIHN0b3AtY29sb3I9IiMxYTNhMWEiLz4KICAgIDxzdG9wIG9mZnNldD0iMTAwJSIgc3RvcC1jb2xvcj0iIzBkMGQwZCIvPgogIDwvcmFkaWFsR3JhZGllbnQ+CiAgPHJlY3QgeD0iNDk1IiB5PSIxMDk4IiB3aWR0aD0iMzAwIiBoZWlnaHQ9IjMwMCIgcng9IjY2IiBmaWxsPSJ1cmwoI2lncmFkKSIvPgogIDwhLS0gV2F2ZWZvcm0gYmFycyBpbnNpZGUgaWNvbiAtLT4KICA8cmVjdCB4PSI1NDMiIHk9IjExOTYiIHdpZHRoPSIxNiIgaGVpZ2h0PSI0MiIgcng9IjgiIGZpbGw9IiMxREI5NTQiIG9wYWNpdHk9IjAuMyIvPgogIDxyZWN0IHg9IjU2NiIgeT0iMTE3NSIgd2lkdGg9IjE2IiBoZWlnaHQ9Ijg4IiByeD0iOCIgZmlsbD0iIzFEQjk1NCIgb3BhY2l0eT0iMC41Ii8+CiAgPHJlY3QgeD0iNTg5IiB5PSIxMTU4IiB3aWR0aD0iMTYiIGhlaWdodD0iMTI0IiByeD0iOCIgZmlsbD0iIzFEQjk1NCIgb3BhY2l0eT0iMC43NSIvPgogIDxyZWN0IHg9IjYxMiIgeT0iMTE0MiIgd2lkdGg9IjE2IiBoZWlnaHQ9IjE1OCIgcng9IjgiIGZpbGw9IiMxREI5NTQiLz4KICA8cmVjdCB4PSI2MzUiIHk9IjExNTgiIHdpZHRoPSIxNiIgaGVpZ2h0PSIxMjQiIHJ4PSI4IiBmaWxsPSIjMURCOTU0IiBvcGFjaXR5PSIwLjc1Ii8+CiAgPHJlY3QgeD0iNjU4IiB5PSIxMTgwIiB3aWR0aD0iMTYiIGhlaWdodD0iNzgiIHJ4PSI4IiBmaWxsPSIjMURCOTU0IiBvcGFjaXR5PSIwLjUiLz4KICA8cmVjdCB4PSI2ODEiIHk9IjEyMDIiIHdpZHRoPSIxNiIgaGVpZ2h0PSIzNCIgcng9IjgiIGZpbGw9IiMxREI5NTQiIG9wYWNpdHk9IjAuMyIvPgogIDwhLS0gQXBwIG5hbWUgLS0+CiAgPHRleHQgeD0iNjQ1IiB5PSIxNDcwIiBmb250LWZhbWlseT0iR2VvcmdpYSxzZXJpZiIgZm9udC1zaXplPSI3MiIgZmlsbD0id2hpdGUiIHRleHQtYW5jaG9yPSJtaWRkbGUiIGZvbnQtc3R5bGU9Iml0YWxpYyIgZm9udC13ZWlnaHQ9Im5vcm1hbCI+TW9udGhseSBNaXg8L3RleHQ+CiAgPHRleHQgeD0iNjQ1IiB5PSIxNTMwIiBmb250LWZhbWlseT0iLWFwcGxlLXN5c3RlbSxzYW5zLXNlcmlmIiBmb250LXNpemU9IjMyIiBmaWxsPSJyZ2JhKDI1NSwyNTUsMjU1LDAuNCkiIHRleHQtYW5jaG9yPSJtaWRkbGUiPkFJLWN1cmF0ZWQgbGlzdGVuaW5nPC90ZXh0Pgo8L3N2Zz4=">
+<link rel="apple-touch-startup-image" media="screen and (device-width: 414px) and (device-height: 896px) and (-webkit-device-pixel-ratio: 3)" href="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAxMjkwIDI3OTYiPgogIDxyZWN0IHdpZHRoPSIxMjkwIiBoZWlnaHQ9IjI3OTYiIGZpbGw9IiMwYTBhMGEiLz4KICA8cmFkaWFsR3JhZGllbnQgaWQ9Imdsb3ciIGN4PSI1MCUiIGN5PSI0NSUiIHI9IjQwJSI+CiAgICA8c3RvcCBvZmZzZXQ9IjAlIiBzdG9wLWNvbG9yPSIjMWEzYTFhIi8+CiAgICA8c3RvcCBvZmZzZXQ9IjEwMCUiIHN0b3AtY29sb3I9IiMwYTBhMGEiLz4KICA8L3JhZGlhbEdyYWRpZW50PgogIDxyZWN0IHdpZHRoPSIxMjkwIiBoZWlnaHQ9IjI3OTYiIGZpbGw9InVybCgjZ2xvdykiLz4KICA8IS0tIEljb24gY2VudGVyZWQgLS0+CiAgPHJlY3QgeD0iNDk1IiB5PSIxMDk4IiB3aWR0aD0iMzAwIiBoZWlnaHQ9IjMwMCIgcng9IjY2IiBmaWxsPSIjMTExIi8+CiAgPHJhZGlhbEdyYWRpZW50IGlkPSJpZ3JhZCIgY3g9IjM1JSIgY3k9IjMwJSIgcj0iNzAlIj4KICAgIDxzdG9wIG9mZnNldD0iMCUiIHN0b3AtY29sb3I9IiMxYTNhMWEiLz4KICAgIDxzdG9wIG9mZnNldD0iMTAwJSIgc3RvcC1jb2xvcj0iIzBkMGQwZCIvPgogIDwvcmFkaWFsR3JhZGllbnQ+CiAgPHJlY3QgeD0iNDk1IiB5PSIxMDk4IiB3aWR0aD0iMzAwIiBoZWlnaHQ9IjMwMCIgcng9IjY2IiBmaWxsPSJ1cmwoI2lncmFkKSIvPgogIDwhLS0gV2F2ZWZvcm0gYmFycyBpbnNpZGUgaWNvbiAtLT4KICA8cmVjdCB4PSI1NDMiIHk9IjExOTYiIHdpZHRoPSIxNiIgaGVpZ2h0PSI0MiIgcng9IjgiIGZpbGw9IiMxREI5NTQiIG9wYWNpdHk9IjAuMyIvPgogIDxyZWN0IHg9IjU2NiIgeT0iMTE3NSIgd2lkdGg9IjE2IiBoZWlnaHQ9Ijg4IiByeD0iOCIgZmlsbD0iIzFEQjk1NCIgb3BhY2l0eT0iMC41Ii8+CiAgPHJlY3QgeD0iNTg5IiB5PSIxMTU4IiB3aWR0aD0iMTYiIGhlaWdodD0iMTI0IiByeD0iOCIgZmlsbD0iIzFEQjk1NCIgb3BhY2l0eT0iMC43NSIvPgogIDxyZWN0IHg9IjYxMiIgeT0iMTE0MiIgd2lkdGg9IjE2IiBoZWlnaHQ9IjE1OCIgcng9IjgiIGZpbGw9IiMxREI5NTQiLz4KICA8cmVjdCB4PSI2MzUiIHk9IjExNTgiIHdpZHRoPSIxNiIgaGVpZ2h0PSIxMjQiIHJ4PSI4IiBmaWxsPSIjMURCOTU0IiBvcGFjaXR5PSIwLjc1Ii8+CiAgPHJlY3QgeD0iNjU4IiB5PSIxMTgwIiB3aWR0aD0iMTYiIGhlaWdodD0iNzgiIHJ4PSI4IiBmaWxsPSIjMURCOTU0IiBvcGFjaXR5PSIwLjUiLz4KICA8cmVjdCB4PSI2ODEiIHk9IjEyMDIiIHdpZHRoPSIxNiIgaGVpZ2h0PSIzNCIgcng9IjgiIGZpbGw9IiMxREI5NTQiIG9wYWNpdHk9IjAuMyIvPgogIDwhLS0gQXBwIG5hbWUgLS0+CiAgPHRleHQgeD0iNjQ1IiB5PSIxNDcwIiBmb250LWZhbWlseT0iR2VvcmdpYSxzZXJpZiIgZm9udC1zaXplPSI3MiIgZmlsbD0id2hpdGUiIHRleHQtYW5jaG9yPSJtaWRkbGUiIGZvbnQtc3R5bGU9Iml0YWxpYyIgZm9udC13ZWlnaHQ9Im5vcm1hbCI+TW9udGhseSBNaXg8L3RleHQ+CiAgPHRleHQgeD0iNjQ1IiB5PSIxNTMwIiBmb250LWZhbWlseT0iLWFwcGxlLXN5c3RlbSxzYW5zLXNlcmlmIiBmb250LXNpemU9IjMyIiBmaWxsPSJyZ2JhKDI1NSwyNTUsMjU1LDAuNCkiIHRleHQtYW5jaG9yPSJtaWRkbGUiPkFJLWN1cmF0ZWQgbGlzdGVuaW5nPC90ZXh0Pgo8L3N2Zz4=">
+<link rel="apple-touch-startup-image" media="screen and (device-width: 375px) and (device-height: 667px) and (-webkit-device-pixel-ratio: 2)" href="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAxMjkwIDI3OTYiPgogIDxyZWN0IHdpZHRoPSIxMjkwIiBoZWlnaHQ9IjI3OTYiIGZpbGw9IiMwYTBhMGEiLz4KICA8cmFkaWFsR3JhZGllbnQgaWQ9Imdsb3ciIGN4PSI1MCUiIGN5PSI0NSUiIHI9IjQwJSI+CiAgICA8c3RvcCBvZmZzZXQ9IjAlIiBzdG9wLWNvbG9yPSIjMWEzYTFhIi8+CiAgICA8c3RvcCBvZmZzZXQ9IjEwMCUiIHN0b3AtY29sb3I9IiMwYTBhMGEiLz4KICA8L3JhZGlhbEdyYWRpZW50PgogIDxyZWN0IHdpZHRoPSIxMjkwIiBoZWlnaHQ9IjI3OTYiIGZpbGw9InVybCgjZ2xvdykiLz4KICA8IS0tIEljb24gY2VudGVyZWQgLS0+CiAgPHJlY3QgeD0iNDk1IiB5PSIxMDk4IiB3aWR0aD0iMzAwIiBoZWlnaHQ9IjMwMCIgcng9IjY2IiBmaWxsPSIjMTExIi8+CiAgPHJhZGlhbEdyYWRpZW50IGlkPSJpZ3JhZCIgY3g9IjM1JSIgY3k9IjMwJSIgcj0iNzAlIj4KICAgIDxzdG9wIG9mZnNldD0iMCUiIHN0b3AtY29sb3I9IiMxYTNhMWEiLz4KICAgIDxzdG9wIG9mZnNldD0iMTAwJSIgc3RvcC1jb2xvcj0iIzBkMGQwZCIvPgogIDwvcmFkaWFsR3JhZGllbnQ+CiAgPHJlY3QgeD0iNDk1IiB5PSIxMDk4IiB3aWR0aD0iMzAwIiBoZWlnaHQ9IjMwMCIgcng9IjY2IiBmaWxsPSJ1cmwoI2lncmFkKSIvPgogIDwhLS0gV2F2ZWZvcm0gYmFycyBpbnNpZGUgaWNvbiAtLT4KICA8cmVjdCB4PSI1NDMiIHk9IjExOTYiIHdpZHRoPSIxNiIgaGVpZ2h0PSI0MiIgcng9IjgiIGZpbGw9IiMxREI5NTQiIG9wYWNpdHk9IjAuMyIvPgogIDxyZWN0IHg9IjU2NiIgeT0iMTE3NSIgd2lkdGg9IjE2IiBoZWlnaHQ9Ijg4IiByeD0iOCIgZmlsbD0iIzFEQjk1NCIgb3BhY2l0eT0iMC41Ii8+CiAgPHJlY3QgeD0iNTg5IiB5PSIxMTU4IiB3aWR0aD0iMTYiIGhlaWdodD0iMTI0IiByeD0iOCIgZmlsbD0iIzFEQjk1NCIgb3BhY2l0eT0iMC43NSIvPgogIDxyZWN0IHg9IjYxMiIgeT0iMTE0MiIgd2lkdGg9IjE2IiBoZWlnaHQ9IjE1OCIgcng9IjgiIGZpbGw9IiMxREI5NTQiLz4KICA8cmVjdCB4PSI2MzUiIHk9IjExNTgiIHdpZHRoPSIxNiIgaGVpZ2h0PSIxMjQiIHJ4PSI4IiBmaWxsPSIjMURCOTU0IiBvcGFjaXR5PSIwLjc1Ii8+CiAgPHJlY3QgeD0iNjU4IiB5PSIxMTgwIiB3aWR0aD0iMTYiIGhlaWdodD0iNzgiIHJ4PSI4IiBmaWxsPSIjMURCOTU0IiBvcGFjaXR5PSIwLjUiLz4KICA8cmVjdCB4PSI2ODEiIHk9IjEyMDIiIHdpZHRoPSIxNiIgaGVpZ2h0PSIzNCIgcng9IjgiIGZpbGw9IiMxREI5NTQiIG9wYWNpdHk9IjAuMyIvPgogIDwhLS0gQXBwIG5hbWUgLS0+CiAgPHRleHQgeD0iNjQ1IiB5PSIxNDcwIiBmb250LWZhbWlseT0iR2VvcmdpYSxzZXJpZiIgZm9udC1zaXplPSI3MiIgZmlsbD0id2hpdGUiIHRleHQtYW5jaG9yPSJtaWRkbGUiIGZvbnQtc3R5bGU9Iml0YWxpYyIgZm9udC13ZWlnaHQ9Im5vcm1hbCI+TW9udGhseSBNaXg8L3RleHQ+CiAgPHRleHQgeD0iNjQ1IiB5PSIxNTMwIiBmb250LWZhbWlseT0iLWFwcGxlLXN5c3RlbSxzYW5zLXNlcmlmIiBmb250LXNpemU9IjMyIiBmaWxsPSJyZ2JhKDI1NSwyNTUsMjU1LDAuNCkiIHRleHQtYW5jaG9yPSJtaWRkbGUiPkFJLWN1cmF0ZWQgbGlzdGVuaW5nPC90ZXh0Pgo8L3N2Zz4=">
+
+<!-- Web App Manifest -->
+<link rel="manifest" href="data:application/json;base64,eyJuYW1lIjoiTW9udGhseSBNaXgiLCJzaG9ydF9uYW1lIjoiTW9udGhseSBNaXgiLCJkZXNjcmlwdGlvbiI6IkFJLWN1cmF0ZWQgU3BvdGlmeSBwbGF5bGlzdHMgZXZlcnkgMiBtb250aHMiLCJzdGFydF91cmwiOiIvIiwiZGlzcGxheSI6InN0YW5kYWxvbmUiLCJiYWNrZ3JvdW5kX2NvbG9yIjoiIzBhMGEwYSIsInRoZW1lX2NvbG9yIjoiIzBhMGEwYSIsIm9yaWVudGF0aW9uIjoicG9ydHJhaXQiLCJpY29ucyI6W3sic3JjIjoiZGF0YTppbWFnZS9zdmcreG1sO2Jhc2U2NCxQSE4yWnlCNGJXeHVjejBpYUhSMGNEb3ZMM2QzZHk1M015NXZjbWN2TWpBd01DOXpkbWNpSUhacFpYZENiM2c5SWpBZ01DQTFNVElnTlRFeUlqNEtJQ0E4Y21WamRDQjNhV1IwYUQwaU5URXlJaUJvWldsbmFIUTlJalV4TWlJZ2NuZzlJakV4TWlJZ1ptbHNiRDBpSXpCaE1HRXdZU0l2UGdvZ0lEeHlaV04wSUhkcFpIUm9QU0kxTVRJaUlHaGxhV2RvZEQwaU5URXlJaUJ5ZUQwaU1URXlJaUJtYVd4c1BTSjFjbXdvSTJkeVlXUXBJaTgrQ2lBZ1BHUmxabk0rQ2lBZ0lDQThjbUZrYVdGc1IzSmhaR2xsYm5RZ2FXUTlJbWR5WVdRaUlHTjRQU0l6TlNVaUlHTjVQU0l6TUNVaUlISTlJamN3SlNJK0NpQWdJQ0FnSUR4emRHOXdJRzltWm5ObGREMGlNQ1VpSUhOMGIzQXRZMjlzYjNJOUlpTXhZVE5oTVdFaUx6NEtJQ0FnSUNBZ1BITjBiM0FnYjJabWMyVjBQU0l4TURBbElpQnpkRzl3TFdOdmJHOXlQU0lqTUdFd1lUQmhJaTgrQ2lBZ0lDQThMM0poWkdsaGJFZHlZV1JwWlc1MFBnb2dJRHd2WkdWbWN6NEtJQ0E4SVMwdElGZGhkbVZtYjNKdElHSmhjbk1nTFMwK0NpQWdQSEpsWTNRZ2VEMGlNVEUySWlCNVBTSXlNakFpSUhkcFpIUm9QU0l5T0NJZ2FHVnBaMmgwUFNJM01pSWdjbmc5SWpFMElpQm1hV3hzUFNJak1VUkNPVFUwSWlCdmNHRmphWFI1UFNJd0xqTWlMejRLSUNBOGNtVmpkQ0I0UFNJeE5UWWlJSGs5SWpFNE1DSWdkMmxrZEdnOUlqSTRJaUJvWldsbmFIUTlJakUxTWlJZ2NuZzlJakUwSWlCbWFXeHNQU0lqTVVSQ09UVTBJaUJ2Y0dGamFYUjVQU0l3TGpVaUx6NEtJQ0E4Y21WamRDQjRQU0l4T1RZaUlIazlJakUxTUNJZ2QybGtkR2c5SWpJNElpQm9aV2xuYUhROUlqSXhNaUlnY25nOUlqRTBJaUJtYVd4c1BTSWpNVVJDT1RVMElpQnZjR0ZqYVhSNVBTSXdMamMxSWk4K0NpQWdQSEpsWTNRZ2VEMGlNak0ySWlCNVBTSXhNakFpSUhkcFpIUm9QU0l5T0NJZ2FHVnBaMmgwUFNJeU56SWlJSEo0UFNJeE5DSWdabWxzYkQwaUl6RkVRamsxTkNJdlBnb2dJRHh5WldOMElIZzlJakkzTmlJZ2VUMGlNVFV3SWlCM2FXUjBhRDBpTWpnaUlHaGxhV2RvZEQwaU1qRXlJaUJ5ZUQwaU1UUWlJR1pwYkd3OUlpTXhSRUk1TlRRaUlHOXdZV05wZEhrOUlqQXVOelVpTHo0S0lDQThjbVZqZENCNFBTSXpNVFlpSUhrOUlqRTVNQ0lnZDJsa2RHZzlJakk0SWlCb1pXbG5hSFE5SWpFek1pSWdjbmc5SWpFMElpQm1hV3hzUFNJak1VUkNPVFUwSWlCdmNHRmphWFI1UFNJd0xqVWlMejRLSUNBOGNtVmpkQ0I0UFNJek5UWWlJSGs5SWpJek1DSWdkMmxrZEdnOUlqSTRJaUJvWldsbmFIUTlJalV5SWlCeWVEMGlNVFFpSUdacGJHdzlJaU14UkVJNU5UUWlJRzl3WVdOcGRIazlJakF1TXlJdlBnb2dJRHdoTFMwZ1RTQnNaWFIwWlhKbWIzSnRJSE4xWW5Sc1pTQnZkbVZ5YkdGNUlDMHRQZ29nSUR4MFpYaDBJSGc5SWpJMU5pSWdlVDBpTXprd0lpQm1iMjUwTFdaaGJXbHNlVDBpUjJWdmNtZHBZU3h6WlhKcFppSWdabTl1ZEMxemFYcGxQU0kxTWlJZ1ptbHNiRDBpZDJocGRHVWlJRzl3WVdOcGRIazlJakF1TURnaUlIUmxlSFF0WVc1amFHOXlQU0p0YVdSa2JHVWlJR1p2Ym5RdGMzUjViR1U5SW1sMFlXeHBZeUkrYldsNFBDOTBaWGgwUGdvOEwzTjJaejQ9Iiwic2l6ZXMiOiI1MTJ4NTEyIiwidHlwZSI6ImltYWdlL3N2Zyt4bWwiLCJwdXJwb3NlIjoiYW55IG1hc2thYmxlIn1dfQo=">
+
+<title>Monthly Mix</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500;9..40,600&display=swap" rel="stylesheet">
+
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
+
+  :root {
+    --green: #1DB954;
+    --bg: #0a0a0a;
+    --surface: #161616;
+    --surface2: #1f1f1f;
+    --surface3: #2a2a2a;
+    --border: rgba(255,255,255,0.09);
+    --text: #ffffff;
+    --text-muted: rgba(255,255,255,0.45);
+    --text-mid: rgba(255,255,255,0.70);
+    --safe-top: env(safe-area-inset-top, 44px);
+    --safe-bottom: env(safe-area-inset-bottom, 34px);
+  }
+
+  html, body {
+    height: 100%; overflow: hidden;
+    background: var(--bg); color: var(--text);
+    font-family: 'DM Sans', -apple-system, sans-serif;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  /* ── SPLASH OVERLAY ── */
+  #splash {
+    position: fixed; inset: 0; z-index: 9999;
+    background: #0a0a0a;
+    display: flex; flex-direction: column;
+    align-items: center; justify-content: center;
+    gap: 0;
+    transition: opacity 0.6s ease;
+  }
+
+  #splash.hidden { opacity: 0; pointer-events: none; }
+
+  .splash-glow {
+    position: absolute; inset: 0;
+    background: radial-gradient(ellipse 60% 45% at 50% 42%, #1a3a1a 0%, transparent 70%);
+    pointer-events: none;
+  }
+
+  .splash-icon {
+    width: 96px; height: 96px;
+    border-radius: 22px;
+    background: #111;
+    display: flex; align-items: center; justify-content: center;
+    margin-bottom: 28px;
+    box-shadow: 0 0 0 1px rgba(29,185,84,0.2), 0 20px 60px rgba(0,0,0,0.6);
+    position: relative; z-index: 1;
+    animation: splashPop 0.5s cubic-bezier(0.34, 1.56, 0.64, 1) 0.1s both;
+  }
+
+  @keyframes splashPop {
+    from { transform: scale(0.7); opacity: 0; }
+    to { transform: scale(1); opacity: 1; }
+  }
+
+  .splash-title {
+    font-family: 'DM Serif Display', serif;
+    font-size: 38px;
+    font-style: italic;
+    letter-spacing: -0.02em;
+    color: #fff;
+    position: relative; z-index: 1;
+    animation: splashFade 0.5s ease 0.35s both;
+  }
+
+  .splash-sub {
+    font-size: 14px;
+    color: rgba(255,255,255,0.38);
+    margin-top: 8px;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    font-size: 11px;
+    font-weight: 500;
+    position: relative; z-index: 1;
+    animation: splashFade 0.5s ease 0.45s both;
+  }
+
+  @keyframes splashFade {
+    from { opacity: 0; transform: translateY(6px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  .splash-bar {
+    position: absolute;
+    bottom: calc(var(--safe-bottom) + 40px);
+    left: 50%; transform: translateX(-50%);
+    width: 120px; height: 3px;
+    background: var(--surface2);
+    border-radius: 2px;
+    overflow: hidden;
+  }
+
+  .splash-bar-fill {
+    height: 100%;
+    background: var(--green);
+    border-radius: 2px;
+    animation: splashLoad 1.6s ease forwards 0.3s;
+    width: 0%;
+  }
+
+  @keyframes splashLoad {
+    0% { width: 0%; }
+    60% { width: 80%; }
+    100% { width: 100%; }
+  }
+
+  /* ── APP SHELL ── */
+  .app-shell {
+    display: flex; flex-direction: column;
+    height: 100dvh;
+    max-width: 430px; margin: 0 auto;
+    background: var(--bg);
+    position: relative; overflow: hidden;
+  }
+
+  .status-bar { height: var(--safe-top); background: var(--bg); flex-shrink: 0; }
+
+  .screen {
+    flex: 1; overflow-y: auto; overflow-x: hidden;
+    -webkit-overflow-scrolling: touch;
+    display: none; padding-bottom: 100px;
+  }
+  .screen.active { display: block; }
+
+  .bottom-nav {
+    position: absolute; bottom: 0; left: 0; right: 0;
+    background: rgba(14,14,14,0.96);
+    backdrop-filter: blur(24px); -webkit-backdrop-filter: blur(24px);
+    border-top: 0.5px solid var(--border);
+    display: flex; padding-bottom: var(--safe-bottom); z-index: 100;
+  }
+
+  .nav-btn {
+    flex: 1; display: flex; flex-direction: column;
+    align-items: center; gap: 4px;
+    padding: 10px 0 6px;
+    background: none; border: none;
+    color: var(--text-muted);
+    font-family: 'DM Sans', sans-serif;
+    font-size: 10px; font-weight: 500; cursor: pointer;
+    transition: color 0.15s;
+  }
+  .nav-btn.active { color: var(--green); }
+  .nav-btn svg { width: 22px; height: 22px; }
+
+  /* ── HOME ── */
+  .home-header { padding: 20px 20px 0; }
+  .eyebrow { font-size: 12px; font-weight: 500; color: var(--green); letter-spacing: 0.08em; text-transform: uppercase; margin-bottom: 6px; }
+  .home-title { font-family: 'DM Serif Display', serif; font-size: 34px; line-height: 1.08; letter-spacing: -0.02em; margin-bottom: 6px; }
+  .home-title em { font-style: italic; color: var(--green); }
+  .home-sub { font-size: 14px; color: var(--text-muted); line-height: 1.5; margin-bottom: 24px; }
+
+  .stats-row { display: grid; grid-template-columns: repeat(3,1fr); gap: 8px; padding: 0 20px; margin-bottom: 24px; }
+  .stat-card { background: var(--surface); border: 0.5px solid var(--border); border-radius: 14px; padding: 14px 12px; text-align: center; }
+  .stat-val { font-size: 24px; font-weight: 500; line-height: 1; margin-bottom: 4px; }
+  .stat-label { font-size: 10px; color: var(--text-muted); line-height: 1.3; }
+
+  .section-header { padding: 0 20px; margin-bottom: 12px; }
+  .section-label { font-size: 11px; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: var(--text-muted); }
+
+  .timeline-scroll { display: flex; gap: 10px; padding: 0 20px; overflow-x: auto; -webkit-overflow-scrolling: touch; scrollbar-width: none; margin-bottom: 28px; }
+  .timeline-scroll::-webkit-scrollbar { display: none; }
+
+  .tl-card { flex-shrink: 0; width: 100px; background: var(--surface); border: 0.5px solid var(--border); border-radius: 14px; padding: 14px 12px; text-align: center; }
+  .tl-card.done { border-color: rgba(29,185,84,0.3); }
+  .tl-card.next { border-color: rgba(239,159,39,0.45); }
+  .tl-dot { width: 10px; height: 10px; border-radius: 50%; margin: 0 auto 8px; }
+  .tl-dot.done { background: var(--green); }
+  .tl-dot.next { background: #EF9F27; }
+  .tl-dot.future { background: var(--surface3); border: 1px solid rgba(255,255,255,0.15); }
+  .tl-month { font-size: 13px; font-weight: 500; margin-bottom: 2px; }
+  .tl-month.done { color: var(--green); }
+  .tl-month.next { color: #EF9F27; }
+  .tl-month.future { color: var(--text-muted); }
+  .tl-status { font-size: 10px; color: var(--text-muted); }
+
+  .mix-card { margin: 0 20px 28px; background: var(--surface); border: 0.5px solid var(--border); border-radius: 20px; overflow: hidden; }
+  .mix-card-header { padding: 16px 16px 12px; border-bottom: 0.5px solid var(--border); display: flex; align-items: center; gap: 12px; }
+  .mix-cover { width: 52px; height: 52px; border-radius: 10px; background: #111; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+  .mix-cover-inner { width: 30px; height: 30px; border-radius: 50%; background: var(--green); display: flex; align-items: center; justify-content: center; }
+  .mix-info { flex: 1; min-width: 0; }
+  .mix-name { font-size: 15px; font-weight: 500; margin-bottom: 3px; }
+  .mix-meta { font-size: 12px; color: var(--text-muted); }
+  .mix-tags { display: flex; gap: 6px; padding: 10px 16px; flex-wrap: wrap; }
+  .tag { font-size: 11px; font-weight: 500; padding: 3px 10px; border-radius: 100px; }
+  .tag-green { background: rgba(29,185,84,0.15); color: var(--green); }
+  .tag-amber { background: rgba(239,159,39,0.15); color: #EF9F27; }
+
+  .track-preview { padding: 0 16px 4px; }
+  .track-row { display: flex; align-items: center; gap: 12px; padding: 9px 0; border-bottom: 0.5px solid var(--border); }
+  .track-row:last-child { border-bottom: none; }
+  .track-num { font-size: 12px; color: var(--text-muted); width: 16px; text-align: right; flex-shrink: 0; }
+  .track-art-sm { width: 36px; height: 36px; border-radius: 6px; background: var(--surface2); flex-shrink: 0; display: flex; align-items: center; justify-content: center; }
+  .track-info-sm { flex: 1; min-width: 0; }
+  .track-name-sm { font-size: 13px; font-weight: 500; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .track-artist-sm { font-size: 11px; color: var(--text-muted); }
+  .track-pill { font-size: 10px; font-weight: 500; padding: 2px 8px; border-radius: 100px; flex-shrink: 0; }
+  .pill-fave { background: rgba(29,185,84,0.12); color: var(--green); }
+  .pill-new { background: rgba(239,159,39,0.12); color: #EF9F27; }
+  .see-all-btn { width: calc(100% - 32px); margin: 12px 16px 16px; padding: 12px; background: var(--surface2); border: 0.5px solid var(--border); border-radius: 12px; color: var(--text-mid); font-family: 'DM Sans', sans-serif; font-size: 13px; font-weight: 500; cursor: pointer; text-align: center; }
+
+  /* ── GENERATE ── */
+  .gen-header { padding: 20px 20px 24px; }
+  .gen-title { font-family: 'DM Serif Display', serif; font-size: 28px; letter-spacing: -0.02em; margin-bottom: 6px; }
+  .gen-sub { font-size: 14px; color: var(--text-muted); line-height: 1.5; }
+  .gen-section { padding: 0 20px; margin-bottom: 24px; }
+  .gen-section-label { font-size: 12px; font-weight: 500; color: var(--text-muted); margin-bottom: 10px; }
+  .slider-card { background: var(--surface); border: 0.5px solid var(--border); border-radius: 16px; padding: 16px; }
+  .slider-row { display: flex; align-items: center; gap: 12px; }
+  .slider-row + .slider-row { margin-top: 16px; }
+  .slider-label { font-size: 13px; color: var(--text-mid); flex: 1; }
+  input[type=range] { flex: 2; -webkit-appearance: none; height: 4px; background: var(--surface3); border-radius: 2px; outline: none; }
+  input[type=range]::-webkit-slider-thumb { -webkit-appearance: none; width: 22px; height: 22px; border-radius: 50%; background: var(--green); cursor: pointer; box-shadow: 0 0 0 4px rgba(29,185,84,0.15); }
+  .slider-val { font-size: 15px; font-weight: 500; color: var(--green); min-width: 38px; text-align: right; }
+  .chips-wrap { display: flex; flex-wrap: wrap; gap: 8px; }
+  .chip { font-size: 13px; font-weight: 500; padding: 8px 16px; border-radius: 100px; border: 0.5px solid var(--border); background: var(--surface); color: var(--text-muted); cursor: pointer; transition: all 0.15s; min-height: 44px; display: flex; align-items: center; }
+  .chip.on { background: rgba(29,185,84,0.12); border-color: rgba(29,185,84,0.5); color: var(--green); }
+  .taste-card { background: var(--surface); border: 0.5px solid var(--border); border-radius: 16px; overflow: hidden; }
+  .taste-row { display: flex; align-items: center; gap: 10px; padding: 13px 16px; border-bottom: 0.5px solid var(--border); }
+  .taste-row:last-child { border-bottom: none; }
+  .taste-dot { width: 8px; height: 8px; border-radius: 50%; background: var(--green); flex-shrink: 0; }
+  .taste-name { font-size: 14px; font-weight: 500; flex: 1; }
+  .taste-sub { font-size: 11px; color: var(--text-muted); }
+  .gen-btn { margin: 0 20px; width: calc(100% - 40px); padding: 16px; background: var(--green); border: none; border-radius: 16px; color: #000; font-family: 'DM Sans', sans-serif; font-size: 15px; font-weight: 600; cursor: pointer; min-height: 52px; transition: opacity 0.15s, transform 0.1s; }
+  .gen-btn:active { opacity: 0.85; transform: scale(0.98); }
+
+  /* ── PROFILE ── */
+  .profile-header { padding: 20px 20px 24px; display: flex; align-items: center; gap: 14px; }
+  .profile-avatar { width: 60px; height: 60px; border-radius: 50%; background: rgba(29,185,84,0.12); border: 1.5px solid rgba(29,185,84,0.35); display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+  .profile-name { font-size: 20px; font-weight: 500; margin-bottom: 3px; }
+  .profile-sub { font-size: 13px; color: var(--text-muted); }
+  .profile-section { padding: 0 20px; margin-bottom: 24px; }
+  .profile-section-label { font-size: 11px; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: var(--text-muted); margin-bottom: 10px; }
+  .list-card { background: var(--surface); border: 0.5px solid var(--border); border-radius: 16px; overflow: hidden; }
+  .list-row { display: flex; align-items: center; justify-content: space-between; padding: 14px 16px; border-bottom: 0.5px solid var(--border); min-height: 52px; }
+  .list-row:last-child { border-bottom: none; }
+  .list-row-label { font-size: 14px; font-weight: 500; }
+  .list-row-val { font-size: 13px; color: var(--text-muted); }
+  .artist-chip { display: inline-flex; align-items: center; gap: 6px; background: var(--surface2); border: 0.5px solid var(--border); border-radius: 100px; padding: 6px 12px; font-size: 13px; margin: 0 6px 6px 0; }
+  .artist-dot { width: 6px; height: 6px; border-radius: 50%; background: var(--green); }
+  .genre-pill { display: inline-block; padding: 6px 14px; border-radius: 100px; background: var(--surface); border: 0.5px solid var(--border); font-size: 13px; color: var(--text-mid); margin: 0 6px 6px 0; }
+  .spotify-row { display: flex; align-items: center; gap: 12px; background: rgba(29,185,84,0.07); border: 0.5px solid rgba(29,185,84,0.22); border-radius: 14px; padding: 14px 16px; margin: 0 20px 24px; }
+  .spotify-icon { width: 36px; height: 36px; border-radius: 50%; background: var(--green); display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+  .spotify-connected { font-size: 12px; color: var(--green); }
+
+  /* Screen transition */
+  @keyframes fadeUp { from { opacity:0; transform:translateY(10px); } to { opacity:1; transform:translateY(0); } }
+  .screen.active { animation: fadeUp 0.28s ease both; }
+
+  .screen-top-spacer { height: 8px; }
+</style>
+</head>
+<body>
+
+<!-- SPLASH SCREEN -->
+<div id="splash">
+  <div class="splash-glow"></div>
+  <div class="splash-icon">
+    <svg width="56" height="42" viewBox="0 0 56 42" xmlns="http://www.w3.org/2000/svg">
+      <rect x="0"  y="16" width="7" height="10" rx="3.5" fill="#1DB954" opacity="0.3"/>
+      <rect x="10" y="9"  width="7" height="24" rx="3.5" fill="#1DB954" opacity="0.5"/>
+      <rect x="20" y="3"  width="7" height="36" rx="3.5" fill="#1DB954" opacity="0.75"/>
+      <rect x="30" y="0"  width="7" height="42" rx="3.5" fill="#1DB954"/>
+      <rect x="40" y="4"  width="7" height="34" rx="3.5" fill="#1DB954" opacity="0.75"/>
+      <rect x="50" y="12" width="6" height="18" rx="3" fill="#1DB954" opacity="0.4"/>
+    </svg>
+  </div>
+  <div class="splash-title">Monthly Mix</div>
+  <div class="splash-sub">AI-curated listening</div>
+  <div class="splash-bar"><div class="splash-bar-fill"></div></div>
+</div>
+
+<!-- APP -->
+<div class="app-shell">
+  <div class="status-bar"></div>
+
+  <!-- HOME -->
+  <div class="screen active" id="screen-home">
+    <div class="screen-top-spacer"></div>
+    <div class="home-header">
+      <div class="eyebrow">AI-curated listening</div>
+      <h1 class="home-title">Your month,<br><em>distilled.</em></h1>
+      <p class="home-sub">A fresh mix every 2 months — your favorites blended with new discoveries.</p>
+    </div>
+    <div class="stats-row">
+      <div class="stat-card"><div class="stat-val">1</div><div class="stat-label">Playlists made</div></div>
+      <div class="stat-card"><div class="stat-val">30</div><div class="stat-label">Tracks total</div></div>
+      <div class="stat-card"><div class="stat-val">13</div><div class="stat-label">Discovered</div></div>
+    </div>
+    <div class="section-header"><div class="section-label">Release timeline</div></div>
+    <div class="timeline-scroll">
+      <div class="tl-card done"><div class="tl-dot done"></div><div class="tl-month done">Apr '26</div><div class="tl-status">Done ✓</div></div>
+      <div class="tl-card next"><div class="tl-dot next"></div><div class="tl-month next">Jun '26</div><div class="tl-status">Up next</div></div>
+      <div class="tl-card"><div class="tl-dot future"></div><div class="tl-month future">Aug '26</div><div class="tl-status">Scheduled</div></div>
+      <div class="tl-card"><div class="tl-dot future"></div><div class="tl-month future">Oct '26</div><div class="tl-status">Scheduled</div></div>
+      <div class="tl-card"><div class="tl-dot future"></div><div class="tl-month future">Dec '26</div><div class="tl-status">Scheduled</div></div>
+      <div class="tl-card"><div class="tl-dot future"></div><div class="tl-month future">Feb '27</div><div class="tl-status">Scheduled</div></div>
+    </div>
+    <div class="section-header"><div class="section-label">April 2026 mix</div></div>
+    <div class="mix-card">
+      <div class="mix-card-header">
+        <div class="mix-cover">
+          <div class="mix-cover-inner">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="#000"><path d="M12 0C5.4 0 0 5.4 0 12s5.4 12 12 12 12-5.4 12-12S18.66 0 12 0zm5.521 17.34c-.24.359-.66.48-1.021.24-2.82-1.74-6.36-2.101-10.561-1.141-.418.122-.779-.179-.899-.539-.12-.421.18-.78.54-.9 4.56-1.021 8.52-.6 11.64 1.32.42.18.479.659.301 1.02zm1.44-3.3c-.301.42-.841.6-1.262.3-3.239-1.98-8.159-2.58-11.939-1.38-.479.12-1.02-.12-1.14-.6-.12-.48.12-1.021.6-1.141C9.6 9.9 15 10.561 18.72 12.84c.361.181.54.78.241 1.2zm.12-3.36C15.24 8.4 8.82 8.16 5.16 9.301c-.6.179-1.2-.181-1.38-.721-.18-.601.18-1.2.72-1.381 4.26-1.26 11.28-1.02 15.721 1.621.539.3.719 1.02.419 1.56-.299.421-1.02.599-1.559.3z"/></svg>
+          </div>
+        </div>
+        <div class="mix-info">
+          <div class="mix-name">Monthly Mix · April 2026</div>
+          <div class="mix-meta">30 tracks · Curated by Claude AI</div>
+        </div>
+      </div>
+      <div class="mix-tags">
+        <span class="tag tag-green">17 favorites</span>
+        <span class="tag tag-amber">13 discoveries</span>
+      </div>
+      <div class="track-preview" id="trackPreview">
+        <div class="track-row"><span class="track-num">1</span><div class="track-art-sm"><svg width="14" height="14" viewBox="0 0 24 24" fill="rgba(29,185,84,0.5)"><path d="M12 3v10.55c-.59-.34-1.27-.55-2-.55-2.21 0-4 1.79-4 4s1.79 4 4 4 4-1.79 4-4V7h4V3h-6z"/></svg></div><div class="track-info-sm"><div class="track-name-sm">Vienna</div><div class="track-artist-sm">Billy Joel</div></div><span class="track-pill pill-fave">Fave</span></div>
+        <div class="track-row"><span class="track-num">2</span><div class="track-art-sm"><svg width="14" height="14" viewBox="0 0 24 24" fill="rgba(29,185,84,0.5)"><path d="M12 3v10.55c-.59-.34-1.27-.55-2-.55-2.21 0-4 1.79-4 4s1.79 4 4 4 4-1.79 4-4V7h4V3h-6z"/></svg></div><div class="track-info-sm"><div class="track-name-sm">Nebraska</div><div class="track-artist-sm">Bruce Springsteen</div></div><span class="track-pill pill-fave">Fave</span></div>
+        <div class="track-row"><span class="track-num">3</span><div class="track-art-sm"><svg width="14" height="14" viewBox="0 0 24 24" fill="rgba(29,185,84,0.5)"><path d="M12 3v10.55c-.59-.34-1.27-.55-2-.55-2.21 0-4 1.79-4 4s1.79 4 4 4 4-1.79 4-4V7h4V3h-6z"/></svg></div><div class="track-info-sm"><div class="track-name-sm">East Coast Summers</div><div class="track-artist-sm">Kaleb Cohen</div></div><span class="track-pill pill-fave">Fave</span></div>
+        <div class="track-row"><span class="track-num">4</span><div class="track-art-sm"><svg width="14" height="14" viewBox="0 0 24 24" fill="rgba(29,185,84,0.5)"><path d="M12 3v10.55c-.59-.34-1.27-.55-2-.55-2.21 0-4 1.79-4 4s1.79 4 4 4 4-1.79 4-4V7h4V3h-6z"/></svg></div><div class="track-info-sm"><div class="track-name-sm">Stick Season</div><div class="track-artist-sm">Noah Kahan</div></div><span class="track-pill pill-new">Discovery</span></div>
+        <div class="track-row"><span class="track-num">5</span><div class="track-art-sm"><svg width="14" height="14" viewBox="0 0 24 24" fill="rgba(29,185,84,0.5)"><path d="M12 3v10.55c-.59-.34-1.27-.55-2-.55-2.21 0-4 1.79-4 4s1.79 4 4 4 4-1.79 4-4V7h4V3h-6z"/></svg></div><div class="track-info-sm"><div class="track-name-sm">The Night We Met</div><div class="track-artist-sm">Lord Huron</div></div><span class="track-pill pill-new">Discovery</span></div>
+      </div>
+      <button class="see-all-btn" id="seeAllBtn" onclick="showAllTracks()">See all 30 tracks</button>
+    </div>
+  </div>
+
+  <!-- GENERATE -->
+  <div class="screen" id="screen-generate">
+    <div class="screen-top-spacer"></div>
+    <div class="gen-header">
+      <div class="eyebrow">June 2026</div>
+      <h2 class="gen-title">Build your next mix</h2>
+      <p class="gen-sub">Customize your preferences and Claude will curate 30 songs for you.</p>
+    </div>
+    <div class="gen-section">
+      <div class="gen-section-label">Playlist length & discovery</div>
+      <div class="slider-card">
+        <div class="slider-row">
+          <span class="slider-label">Songs</span>
+          <input type="range" min="25" max="40" value="30" step="1" oninput="document.getElementById('songVal').textContent=this.value">
+          <span class="slider-val" id="songVal">30</span>
+        </div>
+        <div class="slider-row">
+          <span class="slider-label">New artists</span>
+          <input type="range" min="10" max="60" value="35" step="5" oninput="document.getElementById('discoVal').textContent=this.value+'%'">
+          <span class="slider-val" id="discoVal">35%</span>
+        </div>
+      </div>
+    </div>
+    <div class="gen-section">
+      <div class="gen-section-label">Vibe / mood</div>
+      <div class="chips-wrap">
+        <button class="chip on" onclick="this.classList.toggle('on')">Chill</button>
+        <button class="chip on" onclick="this.classList.toggle('on')">Feel-good</button>
+        <button class="chip" onclick="this.classList.toggle('on')">Energetic</button>
+        <button class="chip" onclick="this.classList.toggle('on')">Focus</button>
+        <button class="chip" onclick="this.classList.toggle('on')">Nostalgic</button>
+        <button class="chip" onclick="this.classList.toggle('on')">Late night</button>
+        <button class="chip" onclick="this.classList.toggle('on')">Acoustic</button>
+        <button class="chip" onclick="this.classList.toggle('on')">Hype</button>
+      </div>
+    </div>
+    <div class="gen-section">
+      <div class="gen-section-label">Your taste profile</div>
+      <div class="taste-card">
+        <div class="taste-row"><div class="taste-dot"></div><div class="taste-name">Billy Joel</div><div class="taste-sub">Core artist</div></div>
+        <div class="taste-row"><div class="taste-dot"></div><div class="taste-name">Bruce Springsteen</div><div class="taste-sub">Core artist</div></div>
+        <div class="taste-row"><div class="taste-dot"></div><div class="taste-name">Kaleb Cohen</div><div class="taste-sub">Core artist</div></div>
+        <div class="taste-row"><div class="taste-dot" style="opacity:0.5"></div><div class="taste-name">Noah Kahan</div><div class="taste-sub">Discovery · Apr '26</div></div>
+        <div class="taste-row"><div class="taste-dot" style="opacity:0.5"></div><div class="taste-name">Lord Huron</div><div class="taste-sub">Discovery · Apr '26</div></div>
+      </div>
+    </div>
+    <button class="gen-btn" onclick="generateMix()">Generate June 2026 mix ↗</button>
+    <div style="height:16px;"></div>
+  </div>
+
+  <!-- PROFILE -->
+  <div class="screen" id="screen-profile">
+    <div class="screen-top-spacer"></div>
+    <div class="profile-header">
+      <div class="profile-avatar"><svg width="28" height="28" viewBox="0 0 24 24" fill="rgba(29,185,84,0.8)"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/></svg></div>
+      <div><div class="profile-name">Your Profile</div><div class="profile-sub">Listener since April 2026</div></div>
+    </div>
+    <div class="spotify-row">
+      <div class="spotify-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="#000"><path d="M12 0C5.4 0 0 5.4 0 12s5.4 12 12 12 12-5.4 12-12S18.66 0 12 0zm5.521 17.34c-.24.359-.66.48-1.021.24-2.82-1.74-6.36-2.101-10.561-1.141-.418.122-.779-.179-.899-.539-.12-.421.18-.78.54-.9 4.56-1.021 8.52-.6 11.64 1.32.42.18.479.659.301 1.02zm1.44-3.3c-.301.42-.841.6-1.262.3-3.239-1.98-8.159-2.58-11.939-1.38-.479.12-1.02-.12-1.14-.6-.12-.48.12-1.021.6-1.141C9.6 9.9 15 10.561 18.72 12.84c.361.181.54.78.241 1.2zm.12-3.36C15.24 8.4 8.82 8.16 5.16 9.301c-.6.179-1.2-.181-1.38-.721-.18-.601.18-1.2.72-1.381 4.26-1.26 11.28-1.02 15.721 1.621.539.3.719 1.02.419 1.56-.299.421-1.02.599-1.559.3z"/></svg></div>
+      <div style="flex:1;"><div style="font-size:14px;font-weight:500;">Spotify</div><div class="spotify-connected">Connected ✓</div></div>
+    </div>
+    <div class="profile-section">
+      <div class="profile-section-label">Core artists</div>
+      <div><span class="artist-chip"><span class="artist-dot"></span>Billy Joel</span><span class="artist-chip"><span class="artist-dot"></span>Bruce Springsteen</span><span class="artist-chip"><span class="artist-dot"></span>Kaleb Cohen</span></div>
+    </div>
+    <div class="profile-section">
+      <div class="profile-section-label">Genres</div>
+      <div><span class="genre-pill">Classic Rock</span><span class="genre-pill">Piano Storytelling</span><span class="genre-pill">Americana</span><span class="genre-pill">Indie Folk</span></div>
+    </div>
+    <div class="profile-section">
+      <div class="profile-section-label">Playlist history</div>
+      <div class="list-card">
+        <div class="list-row">
+          <div><div class="list-row-label">Monthly Mix · April 2026</div><div style="font-size:12px;color:var(--text-muted);">30 tracks · 17 faves · 13 discoveries</div></div>
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="rgba(255,255,255,0.2)"><path d="M8.59 16.59L13.17 12 8.59 7.41 10 6l6 6-6 6z"/></svg>
+        </div>
+      </div>
+    </div>
+    <div class="profile-section">
+      <div class="profile-section-label">Settings</div>
+      <div class="list-card">
+        <div class="list-row"><div class="list-row-label">Frequency</div><div class="list-row-val">Every 2 months</div></div>
+        <div class="list-row"><div class="list-row-label">Default length</div><div class="list-row-val">30 songs</div></div>
+        <div class="list-row"><div class="list-row-label">Discovery mix</div><div class="list-row-val">35% new</div></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- NAV -->
+  <nav class="bottom-nav">
+    <button class="nav-btn active" id="nav-home" onclick="switchTab('home')">
+      <svg viewBox="0 0 24 24" fill="currentColor"><path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"/></svg>
+      Home
+    </button>
+    <button class="nav-btn" id="nav-generate" onclick="switchTab('generate')">
+      <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm5 11h-4v4h-2v-4H7v-2h4V7h2v4h4v2z"/></svg>
+      Generate
+    </button>
+    <button class="nav-btn" id="nav-profile" onclick="switchTab('profile')">
+      <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/></svg>
+      Profile
+    </button>
+  </nav>
+</div>
+
+<script>
+// Dismiss splash after load animation
+window.addEventListener('load', () => {
+  setTimeout(() => {
+    document.getElementById('splash').classList.add('hidden');
+    setTimeout(() => document.getElementById('splash').remove(), 700);
+  }, 2000);
+});
+
+function switchTab(tab) {
+  document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+  document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
+  document.getElementById('screen-' + tab).classList.add('active');
+  document.getElementById('nav-' + tab).classList.add('active');
+}
+
+const allTracks = [
+  ['Vienna','Billy Joel','Fave'],['Piano Man','Billy Joel','Fave'],["She's Always a Woman",'Billy Joel','Fave'],
+  ['Nebraska','Bruce Springsteen','Fave'],['East Coast Summers','Kaleb Cohen','Fave'],
+  ['The Stranger','Billy Joel','Fave'],['Scenes from an Italian Restaurant','Billy Joel','Fave'],
+  ['Born to Run','Bruce Springsteen','Fave'],['The River','Bruce Springsteen','Fave'],
+  ['Thunder Road','Bruce Springsteen','Fave'],['Rosalita','Bruce Springsteen','Fave'],
+  ['Moving Out','Billy Joel','Fave'],['Only the Good Die Young','Billy Joel','Fave'],
+  ['Goodnight Saigon','Billy Joel','Fave'],['Honesty','Billy Joel','Fave'],
+  ['Summer, Highland Falls','Billy Joel','Fave'],['Atlantic City','Bruce Springsteen','Fave'],
+  ['Stick Season','Noah Kahan','Discovery'],['Dial Drunk','Noah Kahan','Discovery'],
+  ['The Night We Met','Lord Huron','Discovery'],['When the Night is Over','Lord Huron','Discovery'],
+  ['Fire and Rain','James Taylor','Discovery'],['Running on Empty','Jackson Browne','Discovery'],
+  ['50 Ways to Leave Your Lover','Paul Simon','Discovery'],['America','Paul Simon','Discovery'],
+  ['Your Song','Elton John','Discovery'],['Rocket Man','Elton John','Discovery'],
+  ['The Night Will Always Win','Manchester Orchestra','Discovery'],
+  ['Lua','Bright Eyes','Discovery'],["Mariner's Revenge Song",'The Decemberists','Discovery']
+];
+
+function showAllTracks() {
+  const preview = document.getElementById('trackPreview');
+  const btn = document.getElementById('seeAllBtn');
+  preview.innerHTML = allTracks.map((t, i) => `
+    <div class="track-row">
+      <span class="track-num">${i+1}</span>
+      <div class="track-art-sm"><svg width="14" height="14" viewBox="0 0 24 24" fill="rgba(29,185,84,0.5)"><path d="M12 3v10.55c-.59-.34-1.27-.55-2-.55-2.21 0-4 1.79-4 4s1.79 4 4 4 4-1.79 4-4V7h4V3h-6z"/></svg></div>
+      <div class="track-info-sm"><div class="track-name-sm">${t[0]}</div><div class="track-artist-sm">${t[1]}</div></div>
+      <span class="track-pill ${t[2]==='Fave'?'pill-fave':'pill-new'}">${t[2]}</span>
+    </div>`).join('');
+  btn.style.display = 'none';
+}
+
+function generateMix() {
+  const songs = document.getElementById('songVal').textContent;
+  const disco = document.getElementById('discoVal').textContent;
+  const vibes = [...document.querySelectorAll('#screen-generate .chip.on')].map(c => c.textContent);
+  const vibeStr = vibes.length ? ' Vibes: ' + vibes.join(', ') + '.' : '';
+  const msg = 'Generate my June 2026 bimonthly playlist. ' + songs + ' songs total, ' + disco + ' new artist discovery.' + vibeStr + ' My taste: Billy Joel, Bruce Springsteen, Kaleb Cohen — classic rock, piano storytelling, Americana. Mix in fresh discoveries and avoid repeating April 2026 tracks.';
+  alert('Send this to Claude in your chat:\n\n' + msg);
+}
+</script>
+</body>
+</html>
